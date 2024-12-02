@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spering</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="grid-layout container">
+    <div class="header">
+        <ul>
+            <li class="navBar"><img src="{% static 'images/logo.png' %}" alt=""></li>
+            <li class="navBar"><a href="{% url 'home' %}" class="navBarText">Home</a></li>
+            <li class="navBar"><a href="{% url 'about' %}" class="navBarText">About</a></li>
+            <li class="navBar"><a href="{% url 'category' %}" class="navBarText">Category</a></li>
+        </ul>
+    </div>
+    <div class="sidebar">
+        <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
+    </div>1
+    <div class="main">
+        <div class="mainText">
+            <h1>
+                best experienced freelancer here
+            </h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent nibh tellus, ultricies vitae lacinia nec, eleifend
+                a lectus. Sed mi ligula, placerat tempor iaculis eu, congue
+                sit amet libero. Sed at fermentum dolor, ut suscipit urna.
+                Ut quis iaculis diam, nec aliquam justo. Suspendisse vel tellus
+                mauris. Curabitur dolor massa, congue a efficitur non, interdum
+                quis lacus. Vestibulum in mi posuere, mattis orci ac, suscipit
+                ligula. Aenean at massa accumsan tellus cursus laoreet in nec justo.
+            </p>
+            <div class="btn">
+                <a href="">
+                    Read More
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footerLogo">
+            <img src="{% static 'images/logo.png' %}" alt="">
+            <h2>Spering</h2>
+        </div>
+        <div class="footerNonImages">
+            <div class="links">
+                <div class="footerTitle">
+                    <h2>Useful links</h2>
+                </div>
+                <div class="linksLinks">
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a href="{% url 'category' %}">Category</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="offices">
+                <div class="footerTitle">
+                    <h2>Offices</h2>
+                </div>
+                <div class="footerText">
+                    <p>Readable content of a page <br>
+                       when looking at its <br>
+                       layout readable content of a<br>
+                       page when looking at its layout</p>
+                </div>
+            </div>
+            <div class="information">
+                <div class="footerTitle">
+                    <h2>Information</h2>
+                </div>
+                <div class="footerText">
+                    Readable content of<br>
+                    a page when<br>
+                    looking at its<br>
+                    layout readable<br>
+                    content of a page<br>
+                    when looking at its<br>
+                    layout
+                </div>
+            </div>
+            <div class="newsletter">
+                <div class="footerTitle">
+                    <h2>Newsletter</h2>
+                </div>
+                <form action="/subscribe" method="post">
+                    <label>
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                    </label>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="copyright">
+        &#169; 2024 all rights reserved by Shrek and Fiona
+    </div>
+</div>
+</body>
+</html>
