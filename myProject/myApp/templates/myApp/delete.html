@@ -28,8 +28,14 @@
                 <form method="POST" action="">
                     {% csrf_token %}
                     <h1>Are you sure you want to delete this post?</h1>
-                    <a href="{{ request.META.HTTP_REFERER }}">Go back</a>
-                    <input type="submit" value="Delete">
+                    <div class="btnGroup">
+                        <div class="btn1">
+                            <a href="{{ request.META.HTTP_REFERER }}" class="noneDecors">Go back</a>
+                        </div>
+                        <div class="btn2">
+                            <input type="submit" value="Delete">
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>

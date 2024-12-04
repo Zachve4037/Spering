@@ -24,13 +24,21 @@
     <div class="main">
         <div class="mainText">
             <div>
-                <a href="{% url 'createPost' %}">Create Post </a>
+                <div class="btn">
+                    <a href="{% url 'createPost' %}">Create Post </a>
+                </div>
                 <hr>
                 {% for post in posts %}
                     <h1>{{ post.title }}</h1>
                     <p>{{ post.content }}</p>
-                    <a href="{% url 'updatePost' post.id %}">Update</a>
-                    <a href="{% url 'deletePost' post.id %}">Delete</a>
+                    <div class="btnGroup">
+                        <div class="btn1">
+                            <a href="{% url 'updatePost' post.id %}" class="noneDecors">Update</a>
+                        </div>
+                        <div class="btn2">
+                            <a href="{% url 'deletePost' post.id %}" class="noneDecors">Delete</a>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>

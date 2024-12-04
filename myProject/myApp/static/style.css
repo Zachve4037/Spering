@@ -79,6 +79,9 @@ h1 {
     justify-content : center;
     text-align : center;
 }
+
+
+
 .btn {
     background-color : #ff4f5a;
     border-radius : 10px;
@@ -88,12 +91,48 @@ h1 {
     font-weight : 600;
     width : 200px;
     height : 50px;
-    margin-bottom : 50px;
+    margin : 50px;
 }
+.btn1 {
+    background-color : #50d85a;
+    border-radius : 10px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    font-weight : 600;
+    width : 200px;
+    height : 50px;
+    margin : 10px;
+    flex: 1;
+}
+.btn2 {
+    background-color : #ff0213;
+    border-radius : 10px;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    font-weight : 600;
+    width : 200px;
+    height : 50px;
+    margin : 10px;
+    flex: 1;
+}
+.noneDecors {
+    text-decoration : none;
+    color: white;
+}
+
 .btn a {
     color : white;
     text-decoration : none;
 }
+
+.btnGroup {
+    display : flex;
+    justify-content : center;
+    gap : 10px;
+}
+
 .category_image_box {
     grid-template-columns : 1fr;
     grid-template-rows : repeat(6,auto);
