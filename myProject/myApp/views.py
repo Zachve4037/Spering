@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from .models import Post
+
 
 posted = [
 	{'id': 1, 'title': 'First Post', 'content': 'This is the first post'},
@@ -7,6 +9,7 @@ posted = [
 ]
 
 def posts(request):
+	posts = Post.objects.all()
 	context = {'posts': posted}
 	return render(request, "myApp/posts.html", context)
 
