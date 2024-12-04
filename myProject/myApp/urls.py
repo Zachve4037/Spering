@@ -7,4 +7,5 @@ urlpatterns = [
     path("category", views.category, name="category"),
     path("posts", views.posts, name="posts"),
     path("createPost", views.createPost, name="createPost"),
+    path("updatePost/<str:pk>/", views.updatePost, name="updatePost"),
 ]

@@ -35,3 +35,15 @@ def createPost(request):
 
 	context={'form': form}
 	return render(request, "myApp/post_form.html", context)
+
+def updatePost(request, pk):
+	post = Post.objects.get(id=pk)
+	form = PostForm(instance=post)
+
+	if request.method == 'POST':
+		form = PostForm(request.POST, instance=post)
+		if form.is_valid():
+			form.save()
+			return redirect('posts')
+
+	return render(request, 'myApp/post_form.html', {'form':form})

@@ -16,22 +16,21 @@
             <li class="navBar"><a href="{% url 'about' %}" class="navBarText">About</a></li>
             <li class="navBar"><a href="{% url 'category' %}" class="navBarText">Category</a></li>
             <li class="navBar"><a href="{% url 'posts' %}" class="navBarText">Posts</a></li>
+
         </ul>
     </div>
     <div class="sidebar">
         <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
-    </div>
+    </div>1
     <div class="main">
         <div class="mainText">
             <div>
-                <a href="{% url 'createPost' %}">Create Post </a>
-                <hr>
-                {% for post in posts %}
-                    <h1>{{ post.title }}</h1>
-                    <p>{{ post.content }}</p>
-                    <a href="{% url 'updatePost' post.id %}">Update</a>
-                    <a href="{% url 'deletePost' post.id %}">Delete</a>
-                {% endfor %}
+                <form method="POST" action="">
+                    {% csrf_token %}
+                    <h1>Are you sure you want to delete this post?</h1>
+                    <a href="{{ request.META.HTTP_REFERER }}">Go back</a>
+                    <input type="submit" value="Delete">
+                </form>
             </div>
         </div>
     </div>
