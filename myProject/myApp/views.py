@@ -47,3 +47,10 @@ def updatePost(request, pk):
 			return redirect('posts')
 
 	return render(request, 'myApp/post_form.html', {'form':form})
+
+def deletePost(request, pk):
+	post = Post.objects.get(id=pk)
+	if request.method == 'POST':
+		post.delete()
+		return  redirect('posts')
+	return render(request, 'myApp/delete.html', {'obj':post})
