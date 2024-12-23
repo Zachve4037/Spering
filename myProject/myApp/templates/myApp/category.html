@@ -8,16 +8,7 @@
 </head>
 <body>
 <div class="grid-layout container no-sidebar">
-  <div class="header">
-    <ul>
-      <li class="navBar"><img src="{% static 'images/logo.png' %}" alt=""></li>
-      <li class="navBar"><a href="{% url 'home' %}" class="navBarText">Home</a></li>
-      <li class="navBar"><a href="{% url 'about' %}" class="navBarText">About</a></li>
-      <li class="navBar"><a href="{% url 'category' %}" class="navBarText">Category</a></li>
-      <li class="navBar"><a href="{% url 'posts' %}" class="navBarText">Posts</a></li>
-        
-    </ul>
-  </div>
+  {% include 'myApp/header.html' %}
   <div class="main category">
     <div class="category_header">
       <h1 class="special_nadpis">
@@ -75,63 +66,7 @@
       </div>
     </div>
   </div>
-  <div class="footer">
-        <div class="footerLogo">
-            <img src="{% static 'images/logo.png' %}" alt="">
-            <h2>Spering</h2>
-        </div>
-        <div class="footerNonImages">
-            <div class="links">
-                <div class="footerTitle">
-                    <h2>Useful links</h2>
-                </div>
-                <div class="linksLinks">
-                    <ul>
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'about' %}">About</a></li>
-                        <li><a href="{% url 'category' %}">Category</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="offices">
-                <div class="footerTitle">
-                    <h2>Offices</h2>
-                </div>
-                <div class="footerText">
-                    <p>Readable content of a page <br>
-                       when looking at its <br>
-                       layout readable content of a<br>
-                       page when looking at its layout</p>
-                </div>
-            </div>
-            <div class="information">
-                <div class="footerTitle">
-                    <h2>Information</h2>
-                </div>
-                <div class="footerText">
-                    Readable content of<br>
-                    a page when<br>
-                    looking at its<br>
-                    layout readable<br>
-                    content of a page<br>
-                    when looking at its<br>
-                    layout
-                </div>
-            </div>
-            <div class="newsletter">
-                <div class="footerTitle">
-                    <h2>Newsletter</h2>
-                </div>
-                <form action="/subscribe" method="post">
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="copyright">
-        &#169; 2024 all rights reserved by Shrek and Fiona
-    </div>
+  {% include 'myApp/footer.html' %}
 </div>
 </body>
 </html>
