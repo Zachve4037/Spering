@@ -25,6 +25,10 @@ def category(request):
 	context={}
 	return render(request, "myApp/category.html", context)
 
+def work(request):
+	context={}
+	return render(request, 'myApp/work.html', context)
+
 def createPost(request):
 	form = PostForm()
 	if request.method == 'POST':

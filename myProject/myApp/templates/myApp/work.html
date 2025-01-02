@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Category</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="grid-layout container">
+        {% include 'myApp/header.html' %}
+        <div class="sidebar">
+    <h1 class="trying">WORK FREELANCER HAS DONE</h1>
+    <div class="item">
+        <div class="image-container">
+            <img src="{% static 'images/f1.png' %}" alt="">
+        </div>
+        <div>
+            <p>$250 Millions</p>
+            <p>Paid to Freelancers</p>
+        </div>
+    </div>
+    <div class="item">
+        <div>
+            <p>$2 Millions</p>
+            <p>Paid Invoices</p>
+        </div>
+        <div class="image-container">
+            <img src="{% static 'images/f2.png' %}" alt="">
+        </div>
+    </div>
+    <div class="item">
+        <div class="image-container">
+            <img src="{% static 'images/f3.png' %}" alt="">
+        </div>
+        <div>
+            <p>$250 Millions</p>
+            <p>Worldwide Freelancer</p>
+        </div>
+    </div>
+    <div class="item">
+        <div>
+            <p>98%</p>
+            <p>Customer Satisfaction Rate</p>
+        </div>
+        <div class="image-container">
+            <img src="{% static 'images/f4.png' %}" alt="">
+        </div>
+    </div>
+</div>
+        <div class="main">
+            <img src="{% static 'images/freelance-img.jpg' %}" class="image indexImage" alt="">
+        </div>
+        {% include 'myApp/footer.html' %}
+    </div>
+</body>
+</html>

@@ -80,8 +80,6 @@ h1 {
     text-align : center;
 }
 
-
-
 .btn {
     background-color : #ff4f5a;
     border-radius : 10px;
@@ -122,9 +120,27 @@ h1 {
     color: white;
 }
 
+.
+
 .btn a {
     color : white;
     text-decoration : none;
+}
+
+.trying {
+    color: black;
+}
+
+.image-container {
+    background-color: black;
+    border-radius: 50%;
+    display: inline-block;
+    padding: 10px; /* Adjust the padding to control the size of the circle */
+}
+
+.image-container img {
+    display: block;
+    border-radius: 50%;
 }
 
 .btnGroup {
@@ -180,6 +196,7 @@ h1 {
     text-align : center;
     margin-top : 10px;
 }
+
 .grid-layout .header {
     grid-area : header;
 }
