@@ -80,6 +80,12 @@ h1 {
     text-align : center;
 }
 
+.work {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 .btn {
     background-color : #ff4f5a;
     border-radius : 10px;
