@@ -1,12 +1,28 @@
 from django.shortcuts import render, redirect
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.models import User
+
 
 #posted = [
 #	{'id': 1, 'title': 'First Post', 'content': 'This is the first post'},
 #	{'id': 2, 'title': 'Second Post', 'content': 'This is the second post'},
 #	{'id': 3, 'title': 'Third Post', 'content': 'This is the third post'},
 #]
+
+def loginPage(request):
+    context = {}
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            context['error'] = 'User does not exist'
+            return render(request, 'myApp/login_register.html', context)
+
+    return render(request, 'myApp/login_register.html', context)
 
 def posts(request):
 	posted = Post.objects.all()

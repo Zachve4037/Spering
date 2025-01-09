@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spering</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="grid-layout container">
+        {% include 'myApp/header.html' %}
+        <div class="sidebar">
+            <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
+        </div>
+        <div class="main">
+            <div>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <label>Username:</label>
+                    <input type="text" name="username" placeholder="Enter username:">
+
+                    <label>Password:</label>
+                    <input type="password" name="password" placeholder="Enter password:">
+
+                    <input type="submit" value="Login">
+                </form>
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% include 'myApp/footer.html' %}
+    </div>
+</body>
+</html>
