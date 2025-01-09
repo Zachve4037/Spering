@@ -11,7 +11,7 @@ class Post(models.Model):
     content = models.TextField(null=False, blank = False)
     created_at = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
-    genre = models.ForeignKey('Genre', on_delete=SET_NULL, null=True)
+    genres = models.ManyToManyField('Genre')
 
     def __str__(self):
         return self.title

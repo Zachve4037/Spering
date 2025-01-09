@@ -13,6 +13,7 @@
             <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
         </div>
         <div class="main">
+        {% if page == 'login' %}
             <div>
                 <form method="post" action="">
                     {% csrf_token %}
@@ -24,11 +25,27 @@
 
                     <input type="submit" value="Login">
                 </form>
+
+                <p>haven't signed up yet?</p>
+                <a href="{% url 'register' %}">Register</a>
+
                 {% if error %}
                     <p style="color: red;">{{ error }}</p>
                 {% endif %}
             </div>
-        </div>
+        {% else %}
+            <div>
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+
+                    <input type="submit" value="Register">
+                </form>
+                <p>already signed up?</p>
+                <a href="{% url 'login' %}">Login</a>
+                </div>
+            </div>
+        {% endif %}
         {% include 'myApp/footer.html' %}
     </div>
 </body>
