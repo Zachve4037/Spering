@@ -15,7 +15,7 @@
     </div>
     <div class="main">
         <div>
-            <form method = "POST" action="">
+            <form method ="POST" action="">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <label for="email" id="formEmail"></label><input type="email" id="email" name="email" placeholder="Enter your email" required>

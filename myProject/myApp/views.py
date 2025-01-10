@@ -48,7 +48,7 @@ def logoutUser(request):
 
 def registerPage(request):
 	form = UserCreationForm()
-	if request.metho == 'POST':
+	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
 			user = form.save(commit=False)
@@ -82,12 +82,15 @@ def work(request):
 
 @login_required(login_url='login')
 def createPost(request):
-	form = PostForm()
 	if request.method == 'POST':
 		form = PostForm(request.POST)
 		if form.is_valid():
-			form.save()
+			post = form.save(commit=False)
+			post.author_name = request.user
+			post.save()
 			return redirect('posts')
+	else:
+		form = PostForm()
 
 	context={'form': form}
 	return render(request, "myApp/post_form.html", context)

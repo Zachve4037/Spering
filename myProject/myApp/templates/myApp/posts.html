@@ -22,7 +22,9 @@
                 <hr>
                 {% for post in posts %}
                     <h1>{{ post.title }}</h1>
+                    <p>{{ post.genres }}</p>
                     <p>{{ post.content }}</p>
+                    {% if post.author_name == request.user %}
                     <div class="btnGroup">
                         <div class="btn1">
                             <a href="{% url 'updatePost' post.id %}" class="noneDecors">Update</a>
@@ -31,6 +33,7 @@
                             <a href="{% url 'deletePost' post.id %}" class="noneDecors">Delete</a>
                         </div>
                     </div>
+                    {% endif %}
                 {% endfor %}
             </div>
         </div>
