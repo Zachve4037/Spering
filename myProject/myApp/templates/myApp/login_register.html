@@ -26,11 +26,12 @@
                     <input type="submit" value="Login">
                 </form>
 
-                <p>haven't signed up yet?</p>
-                <a href="{% url 'register' %}">Register</a>
-
+                <p>Haven't signed up yet?</p>
+                <div class="btn">
+                    <a href="{% url 'register' %}">Register</a>
+                </div>
                 {% if error %}
-                    <p style="color: red;">{{ error }}</p>
+                    <p>{{ error }}</p>
                 {% endif %}
             </div>
         {% else %}
@@ -38,15 +39,16 @@
                 <form method="post" action="">
                     {% csrf_token %}
                     {{ form.as_p }}
-
                     <input type="submit" value="Register">
                 </form>
-                <p>already signed up?</p>
-                <a href="{% url 'login' %}">Login</a>
+                <p>Already signed up?</p>
+                <div class="btn">
+                    <a href="{% url 'login' %}">Login</a>
                 </div>
             </div>
+        </div>
         {% endif %}
-        {% include 'myApp/footer.html' %}
     </div>
+    {% include 'myApp/footer.html' %}
 </body>
 </html>

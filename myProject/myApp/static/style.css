@@ -137,6 +137,11 @@ h1 {
     color: white;
 }
 
+.aboutText {
+    margin-left : 25%;
+    margin-right : 25%;
+}
+
 .btn a {
     color : white;
     text-decoration : none;
@@ -258,12 +263,12 @@ h1 {
 }
 @media (min-width: 720px) {
     .grid-layout.container {
-        grid-template-rows : auto auto auto auto;
-        grid-template-areas :
-                "header header"
-                "sidebar main"
-                "footer footer"
-                "copyright copyright";
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas:
+            "header header"
+            "sidebar main"
+            "footer footer"
+            "copyright copyright";
     }
     .category_image_box {
         grid-template-columns : repeat(2,1fr);
@@ -275,12 +280,12 @@ h1 {
 }
 @media (min-width: 1020px) {
     .grid-layout.container {
-        grid-template-rows : auto auto auto auto;
-        grid-template-areas :
-                "header header header"
-                "sidebar main main"
-                "footer footer footer"
-                "copyright copyright copyright";
+        grid-template-rows: auto auto auto auto;
+        grid-template-areas:
+            "header header header"
+            "sidebar main main"
+            "footer footer footer"
+            "copyright copyright copyright";
     }
     .category_image_box {
         grid-template-columns : repeat(3,1fr);

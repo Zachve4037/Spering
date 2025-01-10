@@ -24,7 +24,7 @@
                             <a href="{{ request.META.HTTP_REFERER }}" class="noneDecors">Go back</a>
                         </div>
                         <div class="btn2">
-                            <input type="submit" value="Delete">
+                            <a href="#" class="noneDecors" id="deleteButton">Delete</a>
                         </div>
                     </div>
                 </form>
@@ -33,5 +33,11 @@
     </div>
     {% include 'myApp/footer.html' %}
 </div>
+<script>
+document.getElementById('deleteButton').addEventListener('click', function(event) {
+    event.preventDefault();
+    this.closest('form').submit();
+});
+</script>
 </body>
 </html>
