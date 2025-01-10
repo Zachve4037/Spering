@@ -1,12 +1,12 @@
+from gc import get_objects
 from http.client import HTTPResponse
 
 from django.contrib.messages.context_processors import messages
-from django.shortcuts import render, redirect
-from django.template.context_processors import request
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
@@ -63,6 +63,22 @@ def posts(request):
 	posted = Post.objects.all()
 	context = {'posts': posted}
 	return render(request, "myApp/posts.html", context)
+
+@login_required
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    comments = Comment.objects.filter(post=post)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = post
+            comment.author_name = request.user
+            comment.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        form = CommentForm()
+    return render(request, 'myApp/post_detail.html', {'post': post, 'form': form, 'comments': comments})
 
 def home(request):
 	context={}

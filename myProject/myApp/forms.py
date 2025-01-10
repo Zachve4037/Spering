@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Post, Genre
+from .models import Post, Genre, Comment
 from django import forms
 
 
@@ -8,3 +8,8 @@ class PostForm(ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'genres']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
