@@ -100,7 +100,7 @@ def updatePost(request, pk):
 	post = Post.objects.get(id=pk)
 	form = PostForm(instance=post)
 
-	if request.user != post.author_name and not request.user.is_superuser:
+	if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
 		return HTTPResponse('You are not allowed to edit this post')
 
 	if request.method == 'POST':
@@ -115,7 +115,7 @@ def updatePost(request, pk):
 def deletePost(request, pk):
 	post = Post.objects.get(id=pk)
 
-	if request.user != post.author_name and not request.user.is_superuser:
+	if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
 		return HTTPResponse('You are not allowed to edit this post')
 
 	if request.method == 'POST':

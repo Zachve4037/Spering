@@ -30,3 +30,10 @@ class Comment(models.Model):
     def __str__(self):
         return self.content
 
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    role = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.user.username
