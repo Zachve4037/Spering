@@ -11,12 +11,6 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
 
-#posted = [
-#	{'id': 1, 'title': 'First Post', 'content': 'This is the first post'},
-#	{'id': 2, 'title': 'Second Post', 'content': 'This is the second post'},
-#	{'id': 3, 'title': 'Third Post', 'content': 'This is the third post'},
-#]
-
 def loginPage(request):
 	page = 'login'
 	context = {'page': page}
@@ -46,17 +40,19 @@ def logoutUser(request):
 	logout(request)
 	return redirect('home')
 
+
 def registerPage(request):
-	form = UserCreationForm()
 	if request.method == 'POST':
 		form = UserCreationForm(request.POST)
 		if form.is_valid():
-			user = form.save(commit=False)
 			form.save()
-			login(request, user)
-			return redirect('home')
+			messages.success(request, 'Account created successfully')
+			return redirect('login')
 		else:
-			messages.error(request, 'An error has occurred during registration')
+			messages.error(request, 'Please correct the error below.')
+	else:
+		form = UserCreationForm()
+
 	return render(request, 'myApp/login_register.html', {'form': form})
 
 def posts(request):

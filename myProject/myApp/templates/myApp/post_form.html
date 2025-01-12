@@ -14,17 +14,34 @@
         <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
     </div>
     <div class="main">
-        <div>
-            <form method ="POST" action="">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <label for="email" id="formEmail"></label><input type="email" id="email" name="email" placeholder="Enter your email" required>
-                <form id="newsletter" action="/subscribe" method="post">
-                    <div id="error-message"></div>
-                    <input type="submit" value="Submit">
-                </form>
-            </form>
-        </div>
+        <form method="POST" action="" class="form-container">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Title:</label>
+                {{ form.title }}
+            </div>
+            <p></p>
+            <div class="form-group">
+                <label for="{{ form.content.id_for_label }}">Content:</label>
+                {{ form.content }}
+            </div>
+            <p></p>
+            <div class="form-group">
+                <label for="{{ form.genres.id_for_label }}">Genres:</label>
+                {{ form.genres }}
+            </div>
+            <p></p>
+            {% if not is_update %}
+            <div class="form-group">
+                <label for="email" id="formEmail">Email:</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <p></p>
+            {% endif %}
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn1">
+            </div>
+        </form>
     </div>
     {% include 'myApp/footer.html' %}
 </div>

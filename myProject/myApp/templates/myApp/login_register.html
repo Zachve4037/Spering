@@ -17,17 +17,21 @@
             <div>
                 <form method="post" action="">
                     {% csrf_token %}
-                    <label>Username:</label>
-                    <input type="text" name="username" placeholder="Enter username:">
-
-                    <label>Password:</label>
-                    <input type="password" name="password" placeholder="Enter password:">
-
-                    <input type="submit" value="Login">
+                    <div class="form-group">
+                        <label>Username:</label>
+                        <input type="text" name="username" placeholder="Enter username:">
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label>Password:</label>
+                        <input type="password" name="password" placeholder="Enter password:">
+                    </div>
+                    <p></p>
+                    <input type="submit" value="Login" class="btn1">
                 </form>
 
                 <p>Haven't signed up yet?</p>
-                <div class="btn">
+                <div class="btn2">
                     <a href="{% url 'register' %}">Register</a>
                 </div>
                 {% if error %}
@@ -38,11 +42,29 @@
             <div>
                 <form method="post" action="">
                     {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Register">
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Username:</label>
+                        {{ form.username.errors }}
+                        {{ form.username }}
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="{{ form.password1.id_for_label }}">Password:</label>
+                        {{ form.password1.errors }}
+                        {{ form.password1 }}
+                    </div>
+                    <p></p>
+                    <div class="form-group">
+                        <label for="{{ form.password2.id_for_label }}">Confirm Password:</label>
+                        {{ form.password2.errors }}
+                        {{ form.password2 }}
+                    </div>
+                    <p></p>
+                    <input type="submit" value="Register" class="btn1">
                 </form>
                 <p>Already signed up?</p>
-                <div class="btn">
+                <div class="btn2">
                     <a href="{% url 'login' %}">Login</a>
                 </div>
             </div>
