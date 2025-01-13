@@ -1,0 +1,36 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<div class="grid-layout container">
+    {% include 'myApp/header.html' %}
+    <div class="sidebar">
+        <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
+    </div>
+    <div class="main">
+        <h1 class="genreName">Dashboard</h1>
+        <h2 class="genreName">Your Posts</h2>
+        <ul>
+            {% for post in user_posts %}
+                <li>
+                    <a class="liA" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <h2 class="genreName">Your Comments</h2>
+        <ul>
+            {% for comment in user_comments %}
+                <li>{{ comment.content }} on <a href="{% url 'post_detail' comment.post.id %}">{{ comment.post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% include 'myApp/footer.html' %}
+</div>
+</body>
+</html>

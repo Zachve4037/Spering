@@ -4,7 +4,7 @@ from django.contrib.messages.context_processors import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Comment
+from .models import Post, Comment, Genre
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -69,7 +69,7 @@ def post_detail(request, post_id):
     return render(request, 'myApp/post_detail.html', {'post': post, 'form': form, 'comments': comments})
 
 def home(request):
-	context={}
+	context={'genres': Genre.objects.all()}
 	return render(request, "myApp/index.html", context)
 
 def about(request):
@@ -77,15 +77,15 @@ def about(request):
 	return render(request, "myApp/about.html", context)
 
 def category(request):
-	context={}
-	return render(request, "myApp/category.html", context)
+    context = {'genres': Genre.objects.all()}
+    return render(request, "myApp/category.html", context)
 
 def work(request):
-	context={}
+	context={'genres': Genre.objects.all()}
 	return render(request, 'myApp/work.html', context)
 
 @login_required(login_url='login')
-def createPost(request):
+def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
         if form.is_valid():
@@ -101,7 +101,7 @@ def createPost(request):
     return render(request, 'myApp/post_form.html', {'form': form})
 
 @login_required(login_url='login')
-def updatePost(request, pk):
+def update_post(request, pk):
 	post = Post.objects.get(id=pk)
 	form = PostForm(instance=post)
 
@@ -127,3 +127,15 @@ def deletePost(request, pk):
 		post.delete()
 		return  redirect('posts')
 	return render(request, 'myApp/delete.html', {'obj':post})
+
+def category_page(request, category_id):
+    category = get_object_or_404(Genre, id=category_id)
+    posts = Post.objects.filter(genres=category)
+    return render(request, 'myApp/category_page.html', {'category': category, 'posts': posts})
+
+@login_required(login_url='login')
+def user_dashboard(request):
+    user_author_name = request.user.id
+    user_posts = Post.objects.filter(author_name_id=user_author_name)
+    context = {'user_posts': user_posts}
+    return render(request, 'myApp/user_dashboard.html', context)

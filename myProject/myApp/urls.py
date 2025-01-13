@@ -1,17 +1,21 @@
-from . import views
+# myApp/urls.py
+
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('login/', views.loginPage, name="login"),
-    path('logout/', views.logoutUser, name="logout"),
-    path('register/', views.registerPage, name="register"),
-    path("", views.home, name="home"),
-    path("about", views.about, name="about"),
-    path("category", views.category, name="category"),
-    path("posts", views.posts, name="posts"),
-    path("work", views.work, name="work"),
-    path("createPost", views.createPost, name="createPost"),
-    path("updatePost/<str:pk>/", views.updatePost, name="updatePost"),
-    path("deletePost/<str:pk>/", views.deletePost, name="deletePost"),
+    path('', views.home, name='home'),
+    path('about/', views.about, name='about'),
+    path('category/', views.category, name='category'),
+    path('work/', views.work, name='work'),
+    path('posts/', views.posts, name='posts'),
+    path('category/<int:category_id>/', views.category_page, name='category_page'),
+    path('login/', views.loginPage, name='login'),
+    path('logout/', views.logoutUser, name='logout'),
+    path('register/', views.registerPage, name='register'),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
+    path('create_post/', views.create_post, name='create_post'),  # Ensure this name matches
+    path('update_post/<int:pk>/', views.update_post, name='update_post'),
+    path('delete_post/<int:pk>/', views.deletePost, name='delete_post'),
+    path('dashboard/', views.user_dashboard, name='user_dashboard'),
 ]

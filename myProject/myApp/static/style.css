@@ -32,6 +32,58 @@ h1 {
 .navBarText:hover {
     color : #1cbbb4;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #333; /* Match the navbar background color */
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-menu li {
+    padding: 12px 16px;
+}
+
+.dropdown-menu li a {
+    color: white; /* Match the navbar text color */
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #575757; /* Match the navbar hover color */
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.liA {
+    line-height: 1.5;
+    text-decoration: none;
+    color: inherit;
+}
+
+.liA:hover {
+    color: #1cbbb4;
+}
+
+.genreName {
+    font-size : 2rem;
+    font-weight : 600;
+    color : #1cbbb4;
+    text-transform: uppercase;
+    text-decoration: none;
+    text-align: center;
+}
+
 .special_nadpis {
     text-decoration-line : underline;
 }
