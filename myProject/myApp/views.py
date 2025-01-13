@@ -9,31 +9,24 @@ from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
+from django.urls import reverse
 
 def loginPage(request):
-	page = 'login'
-	context = {'page': page}
-	if request.user.is_authenticated:
-		return redirect('home')
+    if request.user.is_authenticated:
+        return JsonResponse({'success': True, 'redirect_url': reverse('home')})
 
-	if request.method == 'POST':
-		username = request.POST.get('username')
-		password = request.POST.get('password')
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-		try:
-			user = User.objects.get(username=username)
-		except User.DoesNotExist:
-			context['error'] = 'User does not exist'
-			return render(request, 'myApp/login_register.html', context)
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return JsonResponse({'success': True, 'redirect_url': reverse('home')})
+        else:
+            return JsonResponse({'success': False, 'error': 'Username or password is incorrect'})
 
-		user = authenticate(request, username=username, password=password)
-		if user is not None:
-			login(request, user)
-			return redirect('home')
-		else:
-			messages.error(request, 'Username or password is incorrect')
-
-	return render(request, 'myApp/login_register.html', context)
+    return render(request, 'myApp/login_register.html', {'page': 'login'})
 
 def logoutUser(request):
 	logout(request)
@@ -92,7 +85,6 @@ def work(request):
 	return render(request, 'myApp/work.html', context)
 
 @login_required(login_url='login')
-@login_required(login_url='login')
 def createPost(request):
     if request.method == 'POST':
         form = PostForm(request.POST)
@@ -100,6 +92,7 @@ def createPost(request):
             post = form.save(commit=False)
             post.author_name = request.user
             post.save()
+            form.save_m2m()
             return JsonResponse({'success': True})
         else:
             return JsonResponse({'success': False})

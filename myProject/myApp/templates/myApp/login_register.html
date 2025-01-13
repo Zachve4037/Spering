@@ -15,7 +15,7 @@
         <div class="main">
         {% if page == 'login' %}
             <div>
-                <form method="post" action="">
+                <form id="login-form">
                     {% csrf_token %}
                     <div class="form-group">
                         <label>Username:</label>
@@ -29,14 +29,11 @@
                     <p></p>
                     <input type="submit" value="Login" class="btn1">
                 </form>
-
+                <div id="login-error" style="color: red;"></div>
                 <p>Haven't signed up yet?</p>
                 <div class="btn2">
                     <a href="{% url 'register' %}">Register</a>
                 </div>
-                {% if error %}
-                    <p>{{ error }}</p>
-                {% endif %}
             </div>
         {% else %}
             <div>
@@ -68,9 +65,49 @@
                     <a href="{% url 'login' %}">Login</a>
                 </div>
             </div>
-        </div>
         {% endif %}
+        </div>
     </div>
     {% include 'myApp/footer.html' %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    $('#login-form').on('submit', function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: '{% url "login" %}',
+            type: 'POST',
+            data: $(this).serialize(),
+            headers: { 'X-CSRFToken': csrftoken },
+            success: function(response) {
+                if (response.success) {
+                    window.location.href = response.redirect_url;
+                } else {
+                    $('#login-error').text(response.error);
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#login-error').text('An error occurred: ' + error);
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>

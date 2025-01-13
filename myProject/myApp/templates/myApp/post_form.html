@@ -47,24 +47,33 @@
     {% include 'myApp/footer.html' %}
 </div>
 <script>
-document.getElementById('newsletterForm').addEventListener('submit', function(event) {
-    var email = document.getElementById('email').value;
-    var errorMessage = document.getElementById('error-message');
-    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM fully loaded and parsed');
 
-    if (!emailPattern.test(email)) {
-        errorMessage.textContent = 'Please enter a valid email address.';
-        event.preventDefault();
-        return false;
-    } else {
-        errorMessage.textContent = '';
-        return true
+    var newsletterForm = document.getElementById('newsletterForm');
+    if (newsletterForm) {
+        newsletterForm.addEventListener('submit', function(event) {
+            var email = document.getElementById('email').value;
+            var errorMessage = document.getElementById('error-message');
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!emailPattern.test(email)) {
+                errorMessage.textContent = 'Please enter a valid email address.';
+                event.preventDefault();
+                return false;
+            } else {
+                errorMessage.textContent = '';
+                return true;
+            }
+        });
     }
 });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function() {
+    console.log('form submition');
+
     $('#post-form').on('submit', function (event) {
         event.preventDefault();
         $.ajax({
@@ -72,6 +81,7 @@ $(function() {
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
+                console.log('Success:', response);
                 if (response.success) {
                     $('#post-form').hide();
                     $('#alert').html('<div class="alert alert-success">Post was created successfully</div>').show();
@@ -80,6 +90,7 @@ $(function() {
                 }
             },
             error: function (xhr, status, error) {
+                console.log('Error:', error);
                 $('#alert').html('<div class="alert alert-danger">An error occurred: ' + error + '</div>').show();
             }
         });
