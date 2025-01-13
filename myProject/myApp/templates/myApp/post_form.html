@@ -77,7 +77,7 @@ $(function() {
     $('#post-form').on('submit', function (event) {
         event.preventDefault();
         $.ajax({
-            url: '{% url 'createPost' %}',
+            url: '{% url 'create_post' %}',
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
