@@ -14,7 +14,8 @@
         <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
     </div>
     <div class="main">
-        <form method="POST" action="" class="form-container">
+        <div id="alert" style="display:none;"></div> <!-- Alert element added -->
+        <form method="POST" action="" class="form-container" id="post-form">
             {% csrf_token %}
             <div class="form-group">
                 <label for="{{ form.title.id_for_label }}">Title:</label>
@@ -59,6 +60,30 @@ document.getElementById('newsletterForm').addEventListener('submit', function(ev
         errorMessage.textContent = '';
         return true
     }
+});
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(function() {
+    $('#post-form').on('submit', function (event) {
+        event.preventDefault();
+        $.ajax({
+            url: '{% url 'createPost' %}',
+            type: 'POST',
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response.success) {
+                    $('#post-form').hide();
+                    $('#alert').html('<div class="alert alert-success">Post was created successfully</div>').show();
+                } else {
+                    $('#alert').html('<div class="alert alert-danger">Error occurred!</div>').show();
+                }
+            },
+            error: function (xhr, status, error) {
+                $('#alert').html('<div class="alert alert-danger">An error occurred: ' + error + '</div>').show();
+            }
+        });
+    });
 });
 </script>
 </body>

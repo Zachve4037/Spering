@@ -1,6 +1,5 @@
 from gc import get_objects
 from http.client import HTTPResponse
-
 from django.contrib.messages.context_processors import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -9,7 +8,7 @@ from .models import Post, Comment
 from .forms import PostForm, CommentForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-
+from django.http import JsonResponse
 
 def loginPage(request):
 	page = 'login'
@@ -93,19 +92,20 @@ def work(request):
 	return render(request, 'myApp/work.html', context)
 
 @login_required(login_url='login')
+@login_required(login_url='login')
 def createPost(request):
-	if request.method == 'POST':
-		form = PostForm(request.POST)
-		if form.is_valid():
-			post = form.save(commit=False)
-			post.author_name = request.user
-			post.save()
-			return redirect('posts')
-	else:
-		form = PostForm()
-
-	context={'form': form}
-	return render(request, "myApp/post_form.html", context)
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author_name = request.user
+            post.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+    else:
+        form = PostForm()
+    return render(request, 'myApp/post_form.html', {'form': form})
 
 @login_required(login_url='login')
 def updatePost(request, pk):
