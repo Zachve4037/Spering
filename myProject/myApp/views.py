@@ -1,12 +1,10 @@
-from gc import get_objects
 from http.client import HTTPResponse
 from django.contrib.messages.context_processors import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from .models import Post, Comment, Genre
-from .forms import PostForm, CommentForm
-from django.contrib.auth.models import User
+from .models import Post, Comment, Genre, Profile
+from .forms import PostForm, CommentForm, AvatarUploadForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
@@ -31,7 +29,6 @@ def loginPage(request):
 def logoutUser(request):
 	logout(request)
 	return redirect('home')
-
 
 def registerPage(request):
 	if request.method == 'POST':
@@ -102,19 +99,17 @@ def create_post(request):
 
 @login_required(login_url='login')
 def update_post(request, pk):
-	post = Post.objects.get(id=pk)
-	form = PostForm(instance=post)
-
-	if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
-		return HTTPResponse('You are not allowed to edit this post')
-
-	if request.method == 'POST':
-		form = PostForm(request.POST, instance=post)
-		if form.is_valid():
-			form.save()
-			return redirect('posts')
-
-	return render(request, 'myApp/post_form.html', {'form':form})
+    post = get_object_or_404(Post, pk=pk)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False})
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'myApp/post_form.html', {'form': form, 'is_update': True, 'post': post})
 
 @login_required(login_url='login')
 def deletePost(request, pk):
@@ -139,3 +134,26 @@ def user_dashboard(request):
     user_posts = Post.objects.filter(author_name_id=user_author_name)
     context = {'user_posts': user_posts}
     return render(request, 'myApp/user_dashboard.html', context)
+
+@login_required
+def dashboard(request):
+    if request.method == 'POST':
+        form = AvatarUploadForm(request.POST, request.FILES, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = AvatarUploadForm(instance=request.user.profile)
+    return render(request, 'myApp/user_dashboard.html', {'form': form})
+
+def upload_avatar(request):
+    if request.method == 'POST':
+        form = AvatarUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    return JsonResponse({'success': False, 'error': 'Invalid request'})

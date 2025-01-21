@@ -23,15 +23,7 @@
                     <a class="postName" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
                     <p>{{ post.content }}</p>
                     <p>Genres: {% for genre in post.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-                    {% if post.author_name == request.user or request.user.is_superuser or request.user.profile.role == 'admin' %}
-                        <div class="btn1">
-                            <a href="{% url 'update_post' post.id %}" class="noneDecors">Update</a>
-                        </div>
-                        <div class="btn2">
-                            <a href="{% url 'delete_post' post.id %}" class="noneDecors">Delete</a>
-                        </div>
-                    </div>
-                    {% endif %}
+
                 {% endfor %}
             </div>
         </div>

@@ -27,13 +27,21 @@
                     <li>No comments yet.</li>
                 {% endfor %}
             </ul>
+            {% if post.author_name == request.user or request.user.is_superuser or request.user.profile.role == 'admin' %}
 
+            {% endif %}
             <h2>Add a comment</h2>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn1">Add Comment</button>
+                <button type="submit" class="btn4">Add Comment</button>
             </form>
+            <div class="btn1">
+                <a href="{% url 'update_post' post.id %}" class="noneDecors">Update</a>
+            </div>
+            <div class="btn2">
+                <a href="{% url 'delete_post' post.id %}" class="noneDecors">Delete</a>
+            </div>
         </div>
     </div>
     {% include 'myApp/footer.html' %}

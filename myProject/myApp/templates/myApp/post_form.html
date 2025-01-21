@@ -14,7 +14,8 @@
         <img src="{% static 'images/experience-img.jpg' %}" class="image indexImage" alt="">
     </div>
     <div class="main">
-        <div id="alert" style="display:none;"></div> <!-- Alert element added -->
+        <input type="hidden" id="operation" name="operation" value="{% if is_update %}update{% else %}create{% endif %}">
+        <div id="alert" style="display:none;"></div>
         <form method="POST" action="" class="form-container" id="post-form">
             {% csrf_token %}
             <div class="form-group">
@@ -72,19 +73,21 @@ document.addEventListener('DOMContentLoaded', function() {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(function() {
-    console.log('form submition');
-
+    console.log('form submission');
     $('#post-form').on('submit', function (event) {
         event.preventDefault();
+        var operation = $('#operation').val();
+        var url = operation === 'update' ? '{% url 'update_post' post.id %}' : '{% url 'create_post' %}';
+
         $.ajax({
-            url: '{% url 'create_post' %}',
+            url: url,
             type: 'POST',
             data: $(this).serialize(),
             success: function (response) {
                 console.log('Success:', response);
                 if (response.success) {
                     $('#post-form').hide();
-                    $('#alert').html('<div class="alert alert-success">Post was created successfully</div>').show();
+                    $('#alert').html('<div class="alert alert-success">Post was ' + operation + 'd successfully</div>').show();
                 } else {
                     $('#alert').html('<div class="alert alert-danger">Error occurred!</div>').show();
                 }
@@ -97,5 +100,6 @@ $(function() {
     });
 });
 </script>
+
 </body>
 </html>
