@@ -47,6 +47,13 @@ h1 {
     z-index: 1;
 }
 
+.indexImage {
+    display : block;
+    margin : 0 auto;
+    max-width : 100%;
+    height : auto;
+}
+
 .dropdown-menu li {
     padding: 12px 16px;
 }
@@ -88,7 +95,9 @@ ul li {
     font-weight: 600;
 }
 
-
+.padding {
+    padding-top: 11%;
+}
 
 .liA:hover {
     color: #ff4f5a;

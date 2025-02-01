@@ -6,7 +6,7 @@
         <li class="navBar"><a href="{% url 'home' %}" class="navBarText">Home</a></li>
         <li class="navBar"><a href="{% url 'about' %}" class="navBarText">About</a></li>
         <li class="navBar dropdown">
-            <a href="#" class="navBarText dropdown-toggle">Category</a>
+            <a href="#" class="navBarText dropdown-toggle">Categories</a>
             <ul class="dropdown-menu">
                 {% for genre in genres %}
                 <li><a href="{% url 'category_page' genre.id %}">{{ genre.name }}</a></li>
@@ -15,9 +15,10 @@
         </li>
         <li class="navBar"><a href="{% url 'work' %}" class="navBarText">Work</a></li>
         <li class="navBar"><a href="{% url 'posts' %}" class="navBarText">Posts</a></li>
-        <li class="navBar"><a href="{% url 'user_dashboard' %}" class="navBarText">Dashboard</a></li>
         {% if request.user.is_authenticated %}
+        <li class="navBar"><a class="navBarText">|</a></li>
         <li class="navBar"><a href="{% url 'logout' %}" class="navBarText">Logout</a></li>
+        <li class="navBar"><a href="{% url 'user_dashboard' %}" class="navBarText">Dashboard</a></li>
         {% else %}
         <li class="navBar"><a href="{% url 'login' %}" class="navBarText">Login</a></li>
         {% endif %}
