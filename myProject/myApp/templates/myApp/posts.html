@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <title>Spering</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 <div class="grid-layout container">
@@ -23,11 +24,11 @@
                     <a class="postName" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
                     <p>{{ post.content }}</p>
                     <p>Genres: {% for genre in post.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
                 {% endfor %}
             </div>
         </div>
     </div>
-    {% include 'myApp/footer.html' %}
+{% include 'myApp/footer.html' %}
+</div>
 </body>
 </html>

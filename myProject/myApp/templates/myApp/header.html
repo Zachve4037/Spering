@@ -15,11 +15,11 @@
         </li>
         <li class="navBar"><a href="{% url 'work' %}" class="navBarText">Work</a></li>
         <li class="navBar"><a href="{% url 'posts' %}" class="navBarText">Posts</a></li>
+        <li class="navBar"><a href="{% url 'user_dashboard' %}" class="navBarText">Dashboard</a></li>
         {% if request.user.is_authenticated %}
         <li class="navBar"><a href="{% url 'logout' %}" class="navBarText">Logout</a></li>
         {% else %}
         <li class="navBar"><a href="{% url 'login' %}" class="navBarText">Login</a></li>
         {% endif %}
-        <li class="navBar"><a href="{% url 'user_dashboard' %}" class="navBarText">Dashboard</a></li>
     </ul>
 </div>

@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>{{ post.title }}</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
 <div class="grid-layout container">
@@ -27,21 +28,22 @@
                     <li>No comments yet.</li>
                 {% endfor %}
             </ul>
-            {% if post.author_name == request.user or request.user.is_superuser or request.user.profile.role == 'admin' %}
 
-            {% endif %}
+
             <h2>Add a comment</h2>
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn4">Add Comment</button>
             </form>
+            {% if post.author_name == request.user or request.user.is_superuser or request.user.profile.role == 'admin' %}
             <div class="btn1">
                 <a href="{% url 'update_post' post.id %}" class="noneDecors">Update</a>
             </div>
             <div class="btn2">
                 <a href="{% url 'delete_post' post.id %}" class="noneDecors">Delete</a>
             </div>
+            {% endif %}
         </div>
     </div>
     {% include 'myApp/footer.html' %}

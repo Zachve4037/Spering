@@ -65,6 +65,20 @@ h1 {
     display: block;
 }
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.postsUser {
+    padding-left: 200px;
+}
+
 .liA {
     line-height: 1.5;
     text-transform: uppercase;
@@ -233,6 +247,11 @@ h1 {
 .noneDecors {
     text-decoration : none;
     color: white;
+}
+
+.dashboardP {
+    text-transform: uppercase;
+    padding-left: 50px;
 }
 
 .aboutText {

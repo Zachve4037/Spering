@@ -87,15 +87,15 @@ def create_post(request):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author_name = request.user
+            post.author_name = request.user  # Set the author_name to the current user
             post.save()
-            form.save_m2m()
-            return JsonResponse({'success': True})
+            return JsonResponse({'success': True, 'post_id': post.id})
         else:
-            return JsonResponse({'success': False})
+            print("Form Errors:", form.errors)  # Debugging
+            return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = PostForm()
-    return render(request, 'myApp/post_form.html', {'form': form})
+    return render(request, 'myApp/post_form.html', {'form': form, 'is_update': False})
 
 @login_required(login_url='login')
 def update_post(request, pk):
@@ -106,7 +106,8 @@ def update_post(request, pk):
             form.save()
             return JsonResponse({'success': True})
         else:
-            return JsonResponse({'success': False})
+            print("Form Errors:", form.errors)  # Debugging
+            return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = PostForm(instance=post)
     return render(request, 'myApp/post_form.html', {'form': form, 'is_update': True, 'post': post})
@@ -154,8 +155,6 @@ def dashboard(request):
 @login_required
 def upload_avatar(request):
     if request.method == 'POST':
-        print("FILES:", request.FILES)  # Debugging: See if the file is sent
-
         if 'avatar' not in request.FILES:
             return JsonResponse({'success': False, 'error': 'No file received'})
 
