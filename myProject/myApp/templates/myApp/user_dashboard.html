@@ -12,12 +12,14 @@
     {% include 'myApp/header.html' %}
     <div class="sidebar">
         <div class="avatar-upload">
-            <img id="avatarImage" src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.jpg' %}{% endif %}" class="image indexImage" alt="User Avatar">
-            <input type="file" name="avatar" id="avatarInput">
+            {% if user.profile.avatar %}
+            <img id="avatarImage" src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.jpg' %}{% endif %}" class="avatarImage" alt="User Avatar">
+            {% endif %}
         </div>
         <form id="avatarForm" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
+            <input type="file" id="avatarInput" name="avatar">
             <button type="submit" class="btn1">Upload</button>
         </form>
     </div>
@@ -35,30 +37,32 @@
     {% include 'myApp/footer.html' %}
 </div>
 <script>
-    document.getElementById('avatarInput').addEventListener('change', function() {
-        var form = document.getElementById('avatarForm');
-        var formData = new FormData(form);
+document.getElementById("avatarForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent page reload
 
-        fetch(form.action, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-CSRFToken': form.querySelector('[name=csrfmiddlewaretoken]').value
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                document.getElementById('avatarImage').src = data.avatar_url;
-            } else {
-                alert('Failed to upload avatar.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while uploading the avatar.');
-        });
-    });
+    let formData = new FormData(this); // Collect form data
+
+    fetch("{% url 'upload_avatar' %}", { // Replace with your actual upload URL
+        method: "POST",
+        body: formData,
+        headers: {
+            "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            let avatarImage = document.getElementById("avatarImage");
+            avatarImage.src = data.avatar_url;  // Update the image immediately
+            avatarImage.style.display = "block"; // Make sure it's visible if hidden
+
+            console.log("Avatar updated successfully:", data.avatar_url);
+        } else {
+            alert("Upload failed: " + JSON.stringify(data.errors));
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
 </script>
 </body>
 </html>

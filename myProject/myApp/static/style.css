@@ -340,6 +340,13 @@ h1 {
     text-align : left;
 }
 
+.avatarImage {
+    max-width: 300px;
+    max-height: 300px;
+    width: auto;
+    height: auto;
+}
+
 .avatar-upload {
     position: relative;
     cursor: pointer;

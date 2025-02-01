@@ -135,25 +135,41 @@ def user_dashboard(request):
     context = {'user_posts': user_posts}
     return render(request, 'myApp/user_dashboard.html', context)
 
+
 @login_required
 def dashboard(request):
     if request.method == 'POST':
         form = AvatarUploadForm(request.POST, request.FILES, instance=request.user.profile)
         if form.is_valid():
             form.save()
-            return redirect('dashboard')
-    else:
-        form = AvatarUploadForm(instance=request.user.profile)
-    return render(request, 'myApp/user_dashboard.html', {'form': form})
-
-def upload_avatar(request):
-    if request.method == 'POST':
-        form = AvatarUploadForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
+            return JsonResponse({'success': True, 'avatar_url': request.user.profile.avatar.url})
         else:
             return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        form = AvatarUploadForm(instance=request.user.profile)
+    user_posts = Post.objects.filter(author_name=request.user)
+    return render(request, 'myApp/user_dashboard.html', {'form': form, 'user_posts': user_posts})
+
+
+@login_required
+def upload_avatar(request):
+    if request.method == 'POST':
+        print("FILES:", request.FILES)  # Debugging: See if the file is sent
+
+        if 'avatar' not in request.FILES:
+            return JsonResponse({'success': False, 'error': 'No file received'})
+
+        profile = request.user.profile
+        form = AvatarUploadForm(request.POST, request.FILES, instance=profile)
+
+        if form.is_valid():
+            form.save()
+            print("Saved Avatar Path:", profile.avatar.url)  # Debugging
+            return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
+        else:
+            print("Form Errors:", form.errors)  # Debugging
+            return JsonResponse({'success': False, 'errors': form.errors})
+
     return JsonResponse({'success': False, 'error': 'Invalid request'})
+
+
