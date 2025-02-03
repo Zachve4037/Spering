@@ -97,32 +97,37 @@ def create_post(request):
         form = PostForm()
     return render(request, 'myApp/post_form.html', {'form': form, 'is_update': False})
 
+
 @login_required(login_url='login')
 def update_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
+
+    if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
+        return JsonResponse({'success': False, 'error': 'You are not authorized to update this post'})
+
     if request.method == 'POST':
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
             return JsonResponse({'success': True})
         else:
-            print("Form Errors:", form.errors)  # Debugging
             return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = PostForm(instance=post)
     return render(request, 'myApp/post_form.html', {'form': form, 'is_update': True, 'post': post})
 
+
 @login_required(login_url='login')
 def deletePost(request, pk):
-	post = Post.objects.get(id=pk)
+    post = get_object_or_404(Post, pk=pk)
 
-	if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
-		return HTTPResponse('You are not allowed to edit this post')
+    if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
+        return JsonResponse({'success': False, 'error': 'You are not authorized to delete this post'})
 
-	if request.method == 'POST':
-		post.delete()
-		return  redirect('posts')
-	return render(request, 'myApp/delete.html', {'obj':post})
+    if request.method == 'POST':
+        post.delete()
+        return JsonResponse({'success': True})
+    return render(request, 'myApp/delete.html', {'obj': post})
 
 def category_page(request, category_id):
     category = get_object_or_404(Genre, id=category_id)
@@ -171,4 +176,5 @@ def upload_avatar(request):
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})
 
-
+def custom_404(request, exception):
+    return render(request, '404.html', {}, status=404)

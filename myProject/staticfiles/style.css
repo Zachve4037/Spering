@@ -41,10 +41,17 @@ h1 {
 .dropdown-menu {
     display: none;
     position: absolute;
-    background-color: #333; /* Match the navbar background color */
+    background-color: #333;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+}
+
+.indexImage {
+    display : block;
+    margin : 0 auto;
+    max-width : 100%;
+    height : auto;
 }
 
 .dropdown-menu li {
@@ -52,17 +59,31 @@ h1 {
 }
 
 .dropdown-menu li a {
-    color: white; /* Match the navbar text color */
+    color: white;
     text-decoration: none;
     display: block;
 }
 
 .dropdown-menu li a:hover {
-    background-color: #575757; /* Match the navbar hover color */
+    background-color: #575757;
 }
 
 .dropdown:hover .dropdown-menu {
     display: block;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin: 0;
+    padding: 0;
+}
+
+.postsUser {
+    padding-left: 200px;
 }
 
 .liA {
@@ -74,7 +95,9 @@ h1 {
     font-weight: 600;
 }
 
-
+.padding {
+    padding-top: 11%;
+}
 
 .liA:hover {
     color: #ff4f5a;
@@ -233,6 +256,11 @@ h1 {
 .noneDecors {
     text-decoration : none;
     color: white;
+}
+
+.dashboardP {
+    text-transform: uppercase;
+    padding-left: 50px;
 }
 
 .aboutText {
