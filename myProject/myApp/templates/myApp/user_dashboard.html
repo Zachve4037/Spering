@@ -13,7 +13,8 @@
     {% include 'myApp/header.html' %}
     <div class="sidebar">
         <div class="avatar-upload">
-        <img id="avatarImage" src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.png' %}{% endif %}" class="avatarImage" alt="User Avatar">        </div>
+            <img id="avatarImage" src="{% if user.profile.avatar %}{{ user.profile.avatar.url }}{% else %}{% static 'images/default-avatar.jpg' %}{% endif %}" class="avatarImage" alt="User Avatar">
+        </div>
         <form id="avatarForm" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}

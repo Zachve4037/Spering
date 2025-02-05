@@ -32,6 +32,6 @@ class Comment(models.Model):
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     role = models.CharField(max_length=255)
-    avatar = models.ImageField(upload_to='avatars/', default='avatars/default-avatar.jpg')
+    avatar = models.ImageField(upload_to='avatars/', default='avatars/default-avatar.jpg', blank=True, null=True)
     def __str__(self):
         return self.user.username

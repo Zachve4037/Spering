@@ -8,6 +8,8 @@ from .forms import PostForm, CommentForm, AvatarUploadForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import JsonResponse
 from django.urls import reverse
+from django.templatetags.static import static
+
 
 def loginPage(request):
     if request.user.is_authenticated:
@@ -31,18 +33,15 @@ def logoutUser(request):
 	return redirect('home')
 
 def registerPage(request):
-	if request.method == 'POST':
-		form = UserCreationForm(request.POST)
-		if form.is_valid():
-			form.save()
-			messages.success(request, 'Account created successfully')
-			return redirect('login')
-		else:
-			messages.error(request, 'Please correct the error below.')
-	else:
-		form = UserCreationForm()
-
-	return render(request, 'myApp/login_register.html', {'form': form})
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Account created successfully!')
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+    return render(request, 'myApp/login_register.html', {'form': form, 'page': 'register'})
 
 def posts(request):
 	posted = Post.objects.all()
@@ -153,8 +152,22 @@ def dashboard(request):
             return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = AvatarUploadForm(instance=request.user.profile)
-    user_posts = Post.objects.filter(author_name=request.user)
-    return render(request, 'myApp/user_dashboard.html', {'form': form, 'user_posts': user_posts})
+
+    # Debugging: Check if user has an avatar
+    if request.user.profile.avatar:
+        avatar_url = request.user.profile.avatar.url
+    else:
+        avatar_url = static('images/default-avatar.jpg')  # Fallback to default avatar
+
+    # Print debug info
+    print(f"DEBUG: User Avatar = {request.user.profile.avatar}")
+    print(f"DEBUG: Avatar URL = {avatar_url}")
+
+    return render(request, 'myApp/user_dashboard.html', {
+        'form': form,
+        'user_posts': Post.objects.filter(author_name=request.user),
+        'avatar_url': avatar_url
+    })
 
 
 @login_required
