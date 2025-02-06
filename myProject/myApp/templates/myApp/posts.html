@@ -27,6 +27,9 @@
                     <p>Genres: {% for genre in post.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
                     <pre> </pre>
                 {% endfor %}
+                {% if not posts %}
+                    <p>No posts yet.</p>
+                {% endif %}
             </div>
         </div>
     </div>

@@ -64,6 +64,13 @@ h1 {
     display: block;
 }
 
+.noCategoryPost{
+    display : flex;
+    justify-content : center;
+    align-items : center;
+    font-size: 2rem;
+}
+
 .dropdown-menu li a:hover {
     background-color: #575757;
 }

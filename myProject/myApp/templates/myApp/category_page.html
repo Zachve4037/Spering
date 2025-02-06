@@ -24,6 +24,9 @@
                 </li>
             {% endfor %}
         </ul>
+        {% if not posts %}
+            <p class="noCategoryPost">No posts yet.</p>
+        {% endif %}
     </div>
     {% include 'myApp/footer.html' %}
 </div>
