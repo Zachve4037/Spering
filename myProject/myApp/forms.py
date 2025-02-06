@@ -36,7 +36,7 @@ class AvatarUploadForm(forms.ModelForm):
     def clean_avatar(self):
         avatar = self.cleaned_data.get('avatar')
         if avatar:
-            if avatar.size > 10485760:  # 10 MB
+            if avatar.size > 10485760:
                 raise forms.ValidationError("Avatar file size must be under 10 MB")
             if not avatar.content_type in ['image/jpeg', 'image/png']:
                 raise forms.ValidationError("Avatar file must be a JPEG or PNG image")

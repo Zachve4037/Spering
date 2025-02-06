@@ -88,7 +88,7 @@ def create_post(request):
             post = form.save(commit=False)
             post.author_name = request.user
             post.save()
-            form.save_m2m()  # Save the many-to-many data for the form
+            form.save_m2m()
             return JsonResponse({'success': True, 'post_id': post.id})
         else:
             print("Form Errors:", form.errors)
@@ -154,13 +154,11 @@ def dashboard(request):
     else:
         form = AvatarUploadForm(instance=request.user.profile)
 
-    # Debugging: Check if user has an avatar
     if request.user.profile.avatar:
         avatar_url = request.user.profile.avatar.url
     else:
-        avatar_url = static('images/default-avatar.jpg')  # Fallback to default avatar
+        avatar_url = static('images/default-avatar.jpg')
 
-    # Print debug info
     print(f"DEBUG: User Avatar = {request.user.profile.avatar}")
     print(f"DEBUG: Avatar URL = {avatar_url}")
 
@@ -182,10 +180,10 @@ def upload_avatar(request):
 
         if form.is_valid():
             form.save()
-            print("Saved Avatar Path:", profile.avatar.url)  # Debugging
+            print("Saved Avatar Path:", profile.avatar.url)
             return JsonResponse({'success': True, 'avatar_url': profile.avatar.url})
         else:
-            print("Form Errors:", form.errors)  # Debugging
+            print("Form Errors:", form.errors)
             return JsonResponse({'success': False, 'errors': form.errors})
 
     return JsonResponse({'success': False, 'error': 'Invalid request'})

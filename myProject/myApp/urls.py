@@ -1,4 +1,3 @@
-# myApp/urls.py
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
@@ -15,7 +14,7 @@ urlpatterns = [
     path('logout/', views.logoutUser, name='logout'),
     path('register/', views.registerPage, name='register'),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
-    path('create_post/', views.create_post, name='create_post'),  # Ensure this name matches
+    path('create_post/', views.create_post, name='create_post'),
     path('update_post/<int:pk>/', views.update_post, name='update_post'),
     path('delete_post/<int:pk>/', views.deletePost, name='delete_post'),
     path('dashboard/', views.user_dashboard, name='user_dashboard'),

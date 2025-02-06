@@ -74,7 +74,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'myApp.context_processors.genres_processor',  # Add this line
+                'myApp.context_processors.genres_processor',
             ],
         },
     },
