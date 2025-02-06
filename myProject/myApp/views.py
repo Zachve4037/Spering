@@ -1,12 +1,12 @@
 from http.client import HTTPResponse
-from django.contrib.messages.context_processors import messages
+from django.contrib  import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from .models import Post, Comment, Genre, Profile
 from .forms import PostForm, CommentForm, AvatarUploadForm
 from django.contrib.auth import authenticate, login, logout
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseNotFound
 from django.urls import reverse
 from django.templatetags.static import static
 
@@ -32,6 +32,7 @@ def logoutUser(request):
 	logout(request)
 	return redirect('home')
 
+
 def registerPage(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -41,7 +42,8 @@ def registerPage(request):
             return redirect('login')
     else:
         form = UserCreationForm()
-    return render(request, 'myApp/login_register.html', {'form': form, 'page': 'register'})
+
+    return render(request, 'myApp/login_register.html', {'form': form})
 
 def posts(request):
 	posted = Post.objects.all()
@@ -119,14 +121,17 @@ def update_post(request, pk):
 
 @login_required(login_url='login')
 def deletePost(request, pk):
-    post = get_object_or_404(Post, pk=pk)
+    try:
+        post = Post.objects.get(pk=pk)
+    except Post.DoesNotExist:
+        return HttpResponseNotFound('No Post matches the given query.')
 
     if request.user != post.author_name and not request.user.is_superuser and request.user.profile.role != 'admin':
         return JsonResponse({'success': False, 'error': 'You are not authorized to delete this post'})
 
     if request.method == 'POST':
         post.delete()
-        return JsonResponse({'success': True})
+        return redirect('posts')
     return render(request, 'myApp/delete.html', {'obj': post})
 
 def category_page(request, category_id):
