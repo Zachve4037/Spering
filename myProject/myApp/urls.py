@@ -20,6 +20,8 @@ urlpatterns = [
     path('delete_post/<int:pk>/', views.deletePost, name='delete_post'),
     path('dashboard/', views.user_dashboard, name='user_dashboard'),
     path('upload-avatar/', views.upload_avatar, name='upload_avatar'),
+    path('comment/<int:comment_id>/update/', views.update_comment, name='update_comment'),
+    path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 handler404 = 'myApp.views.custom_404'

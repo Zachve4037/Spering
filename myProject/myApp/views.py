@@ -192,3 +192,26 @@ def upload_avatar(request):
 
 def custom_404(request, exception):
     return render(request, '404.html', {}, status=404)
+
+@login_required
+def update_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user != comment.author_name:
+        return redirect('post_detail', post_id=comment.post.id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_id=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'myApp/update_comment.html', {'form': form, 'comment': comment})
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user == comment.author_name:
+        comment.delete()
+    return redirect('post_detail', post_id=comment.post.id)

@@ -23,7 +23,14 @@
             <h2>Comments</h2>
             <ul>
                 {% for comment in comments %}
-                    <li>{{ comment.author_name }}: {{ comment.content }}</li>
+                    <div class="comment">
+                        <p>{{ comment.content }}</p>
+                        <p>By: {{ comment.author_name.username }}</p>
+                        {% if comment.author_name == user %}
+                        <a href="{% url 'update_comment' comment.id %}" class="btn1">Edit</a>
+                        {% endif %}
+                        <br>
+                    </div>
                 {% empty %}
                     <li>No comments yet.</li>
                 {% endfor %}
