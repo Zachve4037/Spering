@@ -21,6 +21,7 @@
                     <a href="{% url 'create_post' %}">Create Post </a>
                 </div>
                 {% for post in posts %}
+                    <img src="{{ post.author_name.profile.avatar.url }}" alt="Avatar" class="post-avatar">
                     <a class="postName" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
                     <p>{{ post.content }}</p>
                     <p>Genres: {% for genre in post.genres.all %}{{ genre.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>

@@ -19,6 +19,7 @@
         <ul>
             {% for post in posts %}
                 <li>
+                    <img src="{{ post.author_name.profile.avatar.url }}" alt="Avatar" class="post-avatar">
                     <a class="liA" href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
                 </li>
             {% endfor %}

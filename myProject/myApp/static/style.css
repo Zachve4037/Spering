@@ -261,8 +261,7 @@ ul li {
 }
 
 .dashboardP {
-    text-transform: uppercase;
-    padding-left: 50px;
+    padding-left: 10px;
 }
 
 .aboutText {
@@ -368,6 +367,22 @@ ul li {
 }
 .footerText {
     text-align : left;
+}
+
+.dashboardTitle {
+    text-align : center;
+    font-size : 4rem;
+    font-weight : 600;
+    color : #1cbbb4;
+    text-transform : uppercase;
+}
+
+.post-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 .avatarImage {

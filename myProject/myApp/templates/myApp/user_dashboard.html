@@ -23,7 +23,7 @@
         </form>
     </div>
     <div class="main">
-    <h1 class="genreName">Dashboard</h1>
+    <h1 class="dashboardTitle">Dashboard</h1>
     <h2 class="genreName">Your Posts</h2>
     {% if user_posts %}
         <ul class="postsUser">
@@ -34,7 +34,8 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p class="dashboardP">No posts yet?</p>
+        <p class="dashboardP">It appears you have no posts</p>
+        <p class="dashboardP">Start by creating one</p>
         <a class="btn2" href="{% url 'create_post' %}">Create one</a>
     {% endif %}
 </div>

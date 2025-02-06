@@ -86,11 +86,12 @@ def create_post(request):
         form = PostForm(request.POST)
         if form.is_valid():
             post = form.save(commit=False)
-            post.author_name = request.user  # Set the author_name to the current user
+            post.author_name = request.user
             post.save()
+            form.save_m2m()  # Save the many-to-many data for the form
             return JsonResponse({'success': True, 'post_id': post.id})
         else:
-            print("Form Errors:", form.errors)  # Debugging
+            print("Form Errors:", form.errors)
             return JsonResponse({'success': False, 'errors': form.errors})
     else:
         form = PostForm()

@@ -1,9 +1,10 @@
 from django.forms import TextInput, ModelForm
-from .models import Post, Comment, Profile
+from .models import Post, Comment, Profile, Genre
 from django import forms
 
 
 class PostForm(forms.ModelForm):
+    genres = forms.ModelMultipleChoiceField(queryset=Genre.objects.all(), widget=forms.CheckboxSelectMultiple)
     class Meta:
         model = Post
         fields = ['title', 'content', 'genres']
